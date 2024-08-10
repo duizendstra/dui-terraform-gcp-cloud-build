@@ -13,8 +13,15 @@ terraform {
 
 module "cloud_build" {
   source                = "./.."
-  project_id            = "your-project-id"
-  project_number        = "your-project-number"
+
+  project = {
+    "project_id" = "dui-module-test-de27"
+    "project_services" = {
+      "artifactregistry.googleapis.com" = {
+      }
+    }
+  }
+
   service_account_email = "your-project-number-compute@developer.gserviceaccount.com"
   github_connection = {
     name                       = "github-connection-name"

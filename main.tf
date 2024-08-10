@@ -12,7 +12,7 @@ terraform {
 }
 
 resource "google_cloudbuildv2_connection" "main" {
-  project  = var.project_id
+  project  = var.project.project_id
   location = var.region
   name     = var.github_connection.name
 
@@ -26,7 +26,7 @@ resource "google_cloudbuildv2_connection" "main" {
 }
 
 resource "google_cloudbuildv2_repository" "repo" {
-  project = var.project_id
+  project = var.project.project_id
 
   for_each          = { for repo in var.repositories : repo.name => repo }
   name              = each.value.name
@@ -42,9 +42,9 @@ resource "google_cloudbuild_trigger" "repo_trigger" {
   for_each = { for idx, trigger in var.triggers : idx => trigger }
 
   location        = var.region
-  project         = var.project_id
+  project         = var.project.project_id
   name            = each.value.name
-  service_account = "projects/${var.project_id}/serviceAccounts/${var.service_account_email}"
+  service_account = "projects/${var.project.project_id}/serviceAccounts/${var.service_account_email}"
 
   repository_event_config {
     repository = google_cloudbuildv2_repository.repo[each.value.repository_id].id
