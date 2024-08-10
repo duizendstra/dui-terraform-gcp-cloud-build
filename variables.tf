@@ -36,12 +36,6 @@ variable "project" {
   }
 }
 
-variable "region" {
-  description = "The region where Cloud Run service will be deployed"
-  type        = string
-  default     = "europe-west1"
-}
-
 variable "service_account_email" {
   description = "The main service account email"
   type        = string
